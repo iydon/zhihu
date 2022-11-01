@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 py7zr = "*"
 pandas = "*"
+streamlit = "*"
 
 [dev-packages]
 
