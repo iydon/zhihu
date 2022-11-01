@@ -26,4 +26,4 @@ for path in root.rglob('*.7z'):
 for link, dfs in temp.items():
     df = pd.concat(dfs, axis=0).sort_index()
     df.index = df.index.map(datetime.datetime.fromtimestamp)
-    data[link] = df
+    data[link] = df.astype('float64')
