@@ -8,6 +8,7 @@ from cache import meta, data, filter_date, filter_type
 def altair_chart(df: pd.DataFrame) -> alt.LayerChart:
     # Reference: https://altair-viz.github.io/gallery/multiline_tooltip.html
     df.index.name = '时间'
+    df.index = df.index.tz_localize('Asia/Shanghai')
     source = df.reset_index().melt('时间', var_name='标题', value_name='数值')
     nearest = alt.selection(type='single', nearest=True, on='mouseover', fields=['时间'], empty='none')
     line = alt.Chart(source).mark_line(interpolate='basis').encode(x='时间:T', y='数值:Q', color='标题:N')
