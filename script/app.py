@@ -2,7 +2,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from cache import meta, data
+from cache import meta, data, filter_date, filter_type
 
 
 def altair_chart(df: pd.DataFrame) -> alt.LayerChart:
@@ -20,10 +20,19 @@ def altair_chart(df: pd.DataFrame) -> alt.LayerChart:
 
 keys = ['热度', '关注', '浏览', '赞同', '评论', '回答']
 meta_inversed = {v: k for k, v in meta.items()}
-links = sorted(data.keys(), key=lambda k: data[k]['热度'].max(), reverse=True)
+links = data.keys()
 with st.sidebar:
+    with st.form('filter'):
+        types = st.multiselect('类别：', filter_type.keys(), ['zhihu.com/question'])
+        links_by_type = [filter_type[type] for type in types]
+        date_begin = st.date_input('开始时间：')
+        date_end = st.date_input('结束时间：')
+        links_by_date = [links for (dmin, dmax), links in filter_date.items() if not (dmax<date_begin or dmin>date_end)]
+        links = set(sum(links_by_type, start=[])) & set(sum(links_by_date, start=[]))
+        st.form_submit_button('筛选')
     with st.form('titles'):
-        titles = st.multiselect('请选择问题：', [meta[link] for link in links])
+        links_sorted = sorted(links, key=lambda k: data[k]['热度'].max(), reverse=True)
+        titles = st.multiselect('请选择问题：', [meta[link] for link in links_sorted])
         submitted = st.form_submit_button('提交')
 if submitted and titles:
     meta_selected = {title: meta_inversed[title] for title in titles}
