@@ -1,3 +1,5 @@
+import datetime
+
 import altair as alt
 import pandas as pd
 import streamlit as st
@@ -26,8 +28,9 @@ with st.sidebar:
     with st.form('filter'):
         types = st.multiselect('类别：', filter_type.keys(), ['zhihu.com/question'])
         links_by_type = [filter_type[type] for type in types]
-        date_begin = st.date_input('开始时间：')
-        date_end = st.date_input('结束时间：')
+        today, oneday = datetime.date.today(), datetime.timedelta(days=1)
+        date_begin = st.date_input('开始时间：', today-oneday)
+        date_end = st.date_input('结束时间：', today)
         links_by_date = [links for (dmin, dmax), links in filter_date.items() if not (dmax<date_begin or dmin>date_end)]
         links = set(sum(links_by_type, start=[])) & set(sum(links_by_date, start=[]))
         st.form_submit_button('筛选')
