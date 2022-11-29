@@ -12,6 +12,7 @@ class Item(t.NamedTuple):
     link: str
     title: str
     data: np.ndarray
+    dates: np.ndarray
 
     @property
     def diff(self) -> np.ndarray:
@@ -109,13 +110,19 @@ class Items(list):
 
 
 items = Items.from_iterator(
-    Item(link, meta[link], data[link]['热度'].to_numpy())
-    for link in filter_type['zhihu.com/question']
+    Item(
+        link=link, title=meta[link],
+        data=data[link]['热度'].to_numpy(),
+        dates=data[link].index.to_numpy(),
+    ) for link in filter_type['zhihu.com/question']
 ) \
     .filter_data_length(min=9) \
     .filter_data_set_length(min=9) \
-    .filter_data_max(min=1024.0) \
-    .filter_data_diff(min=-10.0) \
-    .sort_data_max()
-for item in items:
-    print(item.link, item.title, item.data.tolist())
+    .filter_data_max(min=700.0) \
+    .filter_data_diff(min=-10.0)
+for item in items.sort_data_max():
+    print('Dates:', item.dates[0], '-->', item.dates[-1])
+    print('Title:', item.title)
+    print('Link :', item.link)
+    print('Data :', item.data.astype(int).tolist())
+    print()
