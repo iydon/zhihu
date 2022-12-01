@@ -23,15 +23,16 @@ else:
         filter_date[key].append(link)
     # type
     patterns = {
-        'zhuanlan.zhihu.com': {re.compile(r'https://zhuanlan.zhihu.com/p/\d+')},
-        'zhihu.com/question': {re.compile(r'https://www.zhihu.com/question/\d+')},
-        'zhihu.com/theater': {re.compile(r'https://www.zhihu.com/theater/\d+')},
-        'zhihu.com/zvideo': {re.compile(r'https://www.zhihu.com/zvideo/\d+')},
-        'zhihu.com/special': {re.compile(r'https://www.zhihu.com/special/\d+')},
-        'zhihu.com/xen/market': {re.compile(r'https://www.zhihu.com/xen/market/ecom-page/\d+'), re.compile(r'https://www.zhihu.com/market/paid_column/\d+/section/\d+')},
-        'zhihu.com/roundtable': {re.compile(r'https://www.zhihu.com/roundtable/[a-zA-Z]+')},
-        'zhihu.com/campaign': {re.compile(r'https://www.zhihu.com/campaign/[a-z0-9\-]')},
-        'zhihu.com/vip-promotion': {re.compile(r'https://www.zhihu.com/vip-promotion/[a-z\-]')},
+        'zhuanlan.zhihu.com': {re.compile(r'https?://zhuanlan\.zhihu\.com/p/\d+')},
+        'zhihu.com/question': {re.compile(r'https?://www\.zhihu\.com/question/\d+')},
+        'zhihu.com/theater': {re.compile(r'https?://www\.zhihu\.com/theater/\d+')},
+        'zhihu.com/zvideo': {re.compile(r'https?://www\.zhihu\.com/zvideo/\d+')},
+        'zhihu.com/special': {re.compile(r'https?://www\.zhihu\.com/special/\d+')},
+        'zhihu.com/xen/market': {re.compile(r'https?://www\.zhihu\.com/xen/market/ecom-page/\d+'), re.compile(r'https?://www\.zhihu\.com/market/paid_column/\d+/section/\d+')},
+        'zhihu.com/roundtable': {re.compile(r'https?://www\.zhihu\.com/roundtable/[a-zA-Z]+')},
+        'zhihu.com/campaign': {re.compile(r'https?://www\.zhihu\.com/campaign/[a-z0-9\-]')},
+        'zhihu.com/vip-promotion': {re.compile(r'https?://www\.zhihu\.com/vip-promotion/[a-z\-]')},
+        'zhi.hu': {re.compile(r'https?://zhi\.hu/[a-zA-Z]+')},
     }
     filter_type = {}
     for link in data.keys():
