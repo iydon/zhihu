@@ -7,7 +7,8 @@ import re
 import time
 
 
-path = p.Path('cache', time.strftime('%Y-%m-%d.pickle'))
+root = p.Path(__file__).absolute().parents[1]
+path = root / 'cache' / time.strftime('%Y-%m-%d.pickle')
 path.parent.mkdir(parents=True, exist_ok=True)
 if path.exists():
     meta, data, filter_date, filter_type = pickle.loads(path.read_bytes())

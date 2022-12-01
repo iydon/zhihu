@@ -22,7 +22,7 @@ def altair_chart(df: pd.DataFrame) -> alt.LayerChart:
 
 
 keys = ['热度', '关注', '浏览', '赞同', '评论', '回答']
-meta_inversed = {v: k for k, v in meta.items()}
+meta_inversed = {v['title']: k for k, v in meta.items()}
 links = data.keys()
 with st.sidebar:
     with st.form('filter'):
@@ -36,7 +36,7 @@ with st.sidebar:
         st.form_submit_button('筛选')
     with st.form('titles'):
         links_sorted = sorted(links, key=lambda k: data[k]['热度'].max(), reverse=True)
-        titles = st.multiselect('请选择问题：', [meta[link] for link in links_sorted])
+        titles = st.multiselect('请选择问题：', [meta[link]['title'] for link in links_sorted])
         submitted = st.form_submit_button('提交')
 if submitted and titles:
     meta_selected = {title: meta_inversed[title] for title in titles}

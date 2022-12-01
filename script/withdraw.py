@@ -111,7 +111,7 @@ class Items(list):
 
 items = Items.from_iterator(
     Item(
-        link=link, title=meta[link],
+        link=link, title=meta[link]['title'],
         data=data[link]['热度'].to_numpy(),
         dates=data[link].index.to_numpy(),
     ) for link in filter_type['zhihu.com/question']
