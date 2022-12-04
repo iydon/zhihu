@@ -1,2 +1,4 @@
 __pycache__/
 cache/
+data/fonts/*.otf
+data/fonts/*.ttf
