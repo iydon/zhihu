@@ -25,7 +25,7 @@ class raw:
 
     @classmethod
     def cache_once(cls) -> None:
-        caches = (cls._data, cls._meta)
+        caches = [cls._data, cls._meta]
         if all(map(lambda x: x is not None, caches)):
             return
         cls._data, cls._meta = cls._get_data_meta()
@@ -81,13 +81,17 @@ class cached:
     _filter_type = None
 
     @classmethod
+    def all(cls) -> t.Tuple[Data, Meta, FilterDate, FilterType]:
+        return cls.data(), cls.meta(), cls.filter_date(), cls.filter_type()
+
+    @classmethod
     def clear(cls) -> None:
         cls._data = cls._meta = cls._filter_date, cls._filter_type = None
         raw.cache_clear()
 
     @classmethod
     def cache_once(cls) -> None:
-        caches = (cls._data, cls._meta, cls._filter_date, cls._filter_type)
+        caches = [cls._data, cls._meta, cls._filter_date, cls._filter_type]
         if all(map(lambda x: x is not None, caches)):
             return
         file = path.cache_today()

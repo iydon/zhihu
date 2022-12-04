@@ -1,8 +1,7 @@
-__all__ = ['load']
+__all__ = ['config', 'load']
 
 
-from . import load
-from .config import path as _path
+from . import config, load
 
 
-_path.mkdirs()
+config.path.mkdirs()

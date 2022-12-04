@@ -1,8 +1,11 @@
-__all__ = ['path']
+__all__ = ['keys', 'path']
 
 
 import pathlib as p
 import time
+
+
+keys = ['热度', '关注', '浏览', '赞同', '评论', '回答']
 
 
 class path:
