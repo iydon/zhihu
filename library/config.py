@@ -13,6 +13,7 @@ class path:
     root = p.Path(__file__).absolute().parents[1]
     cache = root / 'cache'
     data = root / 'data'
+    fonts = data / 'fonts'
     stopwords = data / 'stopwords'
     # file
     excerpts = data / 'excerpts.tsv'

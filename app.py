@@ -4,7 +4,7 @@ import typing as t
 
 import streamlit as st
 
-from library.app import constant, plot, filter
+from library.app import constant, filter, plot, wordcloud
 from library.type import FilterDate, FilterType
 
 if t.TYPE_CHECKING:
@@ -89,7 +89,19 @@ class App:
         )
 
     def wordcloud(self, links: t.List[str]) -> None:
-        st.write(links)
+        with st.form('wordcloud'):
+            width = st.slider('宽度：', min_value=64, max_value=1024, value=512, step=1)
+            height = st.slider('高度：', min_value=64, max_value=1024, value=512, step=1)
+            weighted = '热榜热度' == st.selectbox('权重：', ['热榜热度', '热榜数量'])
+            font_name = st.selectbox('字体：', wordcloud.font_names())
+            extra_words = st.text_input('额外新词（空格分隔）：', '奥密克戎 斯诺登')
+            extra_stopwords = st.text_input('额外停用词（空格分隔）：', '% 「 时 天 日 月 年 中 会')
+            st.form_submit_button('提交')
+        fig = wordcloud.api(
+            links, width, height, weighted, font_name,
+            extra_words.split(), extra_stopwords.split(),
+        )
+        st.pyplot(fig)
 
     def _markdown(self, lines: t.Iterable[str]) -> None:
         st.markdown('\n'.join(lines))

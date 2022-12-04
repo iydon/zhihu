@@ -5,8 +5,8 @@ import typing as t
 
 import numpy as np
 
-from ..type import Range
 from .constant import data, meta
+from ..type import Range
 
 if t.TYPE_CHECKING:
     from typing_extensions import Self
