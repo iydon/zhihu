@@ -69,10 +69,10 @@ class App:
 
     def filter(self, links: t.List[str]) -> None:
         with st.form('filter'):
-            hour_min = st.slider('热榜时长阈值（小时）', min_value=0.0, max_value=24.0, value=3.0, step=0.25)
-            set_length = st.slider('唯一值阈值（个）', min_value=0, max_value=48, value=9, step=1)
-            max = st.slider('最大值阈值（万热度）', min_value=1, max_value=5_000, value=700, step=1)
-            diff = st.slider('差值阈值（万热度）', min_value=-100, max_value=100, value=-10, step=1)
+            hour_min = st.slider('热榜时长阈值（小时）：', min_value=0.0, max_value=24.0, value=3.0, step=0.25)
+            set_length = st.slider('唯一值阈值（个）：', min_value=0, max_value=48, value=9, step=1)
+            max = st.slider('最大值阈值（万热度）：', min_value=1, max_value=5_000, value=700, step=1)
+            diff = st.slider('差值阈值（万热度）：', min_value=-100, max_value=100, value=-10, step=1)
             st.form_submit_button('提交')
         items = filter.api(
             links,
