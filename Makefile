@@ -5,4 +5,4 @@ PYTHON = python
 
 
 app:
-	$(PYTHON) -m streamlit run script/app.py
+	$(PYTHON) -m streamlit run app.py
