@@ -145,7 +145,11 @@ class cached:
             'zhihu.com/campaign': {re.compile(r'https?://www\.zhihu\.com/campaign/[a-z0-9\-]')},
             'zhihu.com/vip-promotion': {re.compile(r'https?://www\.zhihu\.com/vip-promotion/[a-z\-]')},
             'zhi.hu': {re.compile(r'https?://zhi\.hu/[a-zA-Z]+')},
+            'zhihu.com/topic': {re.compile(r'https?://www.zhihu.com/topic/\d+/hot')},
+            'zhihu.com/pin': {re.compile(r'https?://www.zhihu.com/pin/\d+')},
+            'event.zhihu.com': {re.compile(r'https?://event.zhihu.com/\S+')},
         }
+        errors = []
         for link in data.keys():
             for type, pattern in patterns.items():
                 if any(p.match(link) for p in pattern):
@@ -154,5 +158,7 @@ class cached:
                     filter_type[type].append(link)
                     break
             else:
-                raise Exception(link)
+                errors.append(link)
+        if errors:
+            raise Exception(errors)
         return filter_type
