@@ -1,4 +1,5 @@
 import datetime
+import itertools as it
 import functools as f
 import typing as t
 
@@ -12,6 +13,7 @@ if t.TYPE_CHECKING:
 
 
 data, meta, filter_date, filter_type = constant.all
+dates = list(it.chain(*filter_date.keys()))
 titles_inversed = {v['title']: k for k, v in meta.items()}
 
 
@@ -35,9 +37,9 @@ class App:
         }
 
     def links_by_date(self, filter_date: FilterDate) -> t.Set[str]:
-            today, oneday = datetime.date.today(), datetime.timedelta(days=1)
-            date_begin = st.date_input('开始时间：', today-oneday)
-            date_end = st.date_input('结束时间：', today)
+            kwargs = {'value': max(dates), 'min_value': min(dates), 'max_value': max(dates)}
+            date_begin = st.date_input('开始时间：', **kwargs)
+            date_end = st.date_input('结束时间：', **kwargs)
             return f.reduce(
                 set.union, (
                     set(links)
@@ -94,7 +96,7 @@ class App:
             height = st.slider('高度：', min_value=64, max_value=1024, value=512, step=1)
             weighted = '热榜热度' == st.selectbox('权重：', ['热榜热度', '热榜数量'])
             font_name = st.selectbox('字体：', wordcloud.font_names())
-            extra_words = st.text_input('额外新词（空格分隔）：', '奥密克戎 斯诺登')
+            extra_words = st.text_input('额外新词（空格分隔）：', '奥密克戎 斯诺登 流浪地球')
             extra_stopwords = st.text_input('额外停用词（空格分隔）：', '% 「 时 天 日 月 年 中 会')
             st.form_submit_button('提交')
         fig = wordcloud.api(
