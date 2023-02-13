@@ -96,7 +96,7 @@ class App:
             weighted = '热榜热度' == st.selectbox('权重：', ['热榜热度', '热榜数量'])
             font_name = st.selectbox('字体：', wordcloud.font_names())
             extra_words = st.text_input('额外新词（空格分隔）：', '奥密克戎 斯诺登 流浪地球')
-            extra_stopwords = st.text_input('额外停用词（空格分隔）：', '% 「 时 天 日 月 年 中 会')
+            extra_stopwords = st.text_input('额外停用词（空格分隔）：', '% 「 时 天 日 月 年 中 会 说 称')
             st.form_submit_button('提交')
         fig = wordcloud.api(
             links, width, height, weighted, font_name,
