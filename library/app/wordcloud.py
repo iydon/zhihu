@@ -34,7 +34,7 @@ def api(
         if excerpt is None:
             continue
         metric = data[link]['热度'].mean() if weighted else 1.0
-        for word in set(tokenizer.cut(excerpt, cut_all=False)):
+        for word in tokenizer.cut(excerpt, cut_all=False):
             if word in all_stopwords:
                 continue
             counter[word] += metric
