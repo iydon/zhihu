@@ -2,6 +2,7 @@ __all__ = ['api', 'font_names']
 
 
 import collections as c
+import math as m
 import typing as t
 
 import jieba
@@ -33,7 +34,12 @@ def api(
         excerpt = meta[link]['excerpt']
         if excerpt is None:
             continue
-        metric = data[link]['热度'].mean() if weighted else 1.0
+        if weighted:
+            metric = data[link]['热度'].mean()
+            if m.isnan(metric):
+                continue
+        else:
+            metric = 1.0
         for word in tokenizer.cut(excerpt, cut_all=False):
             if word in all_stopwords:
                 continue

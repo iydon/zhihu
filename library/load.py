@@ -43,7 +43,7 @@ class raw:
     @classmethod
     def _excerpts(cls) -> Excerpts:
         return pd \
-            .read_csv(path.excerpts, sep='\t', header=None, index_col=0) \
+            .read_csv(path.excerpts, sep='\t', header=None, index_col=0, lineterminator='\n') \
             .squeeze('columns') \
             .to_dict()
 
